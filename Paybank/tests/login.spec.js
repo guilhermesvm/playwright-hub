@@ -30,9 +30,12 @@ test('Should insert a valid 2FA code and log in', async ({ page }) => {
   await loginPage.visitPage();
   await loginPage.fillCPFAndContinue(account.cpf)
   await loginPage.fillPasswordAndContinue(account.password)
-  await page.waitForTimeout(3000)
-  const code = await getLatest2FACode();
+
+  //Checkpoint Strategy
+  await page.getByRole('heading', {name:'Verificação em duas etapas'}).waitFor({timeout: 3000})
+
+  const code = await getLatest2FACode(account.cpf);
   await loginPage.fill2FACodeAndVerify(code)
-  await page.waitForTimeout(2000)
-  expect(await dashPage.checkAccountBalance()).toContainText('R$')
+
+  await expect(await dashPage.checkAccountBalance()).toContainText('R$')
 });
