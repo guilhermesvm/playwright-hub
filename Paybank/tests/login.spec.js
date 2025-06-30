@@ -3,39 +3,46 @@ import { LoginPage } from '../pages/LoginPage';
 import { getLatest2FACode } from '../support/db';
 import { DashPage } from '../pages/DashPage';
 
-test('Should display an error when 2FA code is invalid', async ({ page }) => {
-  const loginPage = new LoginPage(page)
+test.describe('Happy Login Flow', () => {
+  test('Should insert a valid 2FA code and log in', async ({ page }) => {
+    const loginPage = new LoginPage(page)
+    const dashPage = new DashPage(page)
 
-  const account = {
-    cpf: '00000014141',
-    password: '147258'
+    const account = {
+      cpf: '00000014141',
+      password: '147258'
+    }
 
-  }
-  await loginPage.visitPage();
-  await loginPage.fillCPFAndContinue(account.cpf)
-  await loginPage.fillPasswordAndContinue(account.password)
-  await loginPage.fill2FACodeAndVerify('12123123124')
-  await expect(page.locator('span')).toContainText('Código inválido. Por favor, tente novamente.');
-});
+    await loginPage.visitPage();
+    await loginPage.fillCPFAndContinue(account.cpf)
+    await loginPage.fillPasswordAndContinue(account.password)
 
-test('Should insert a valid 2FA code and log in', async ({ page }) => {
-  const loginPage = new LoginPage(page)
-  const dashPage = new DashPage(page)
+    //Checkpoint Strategy
+    await page.getByRole('heading', {name:'Verificação em duas etapas'}).waitFor({timeout: 3000})
 
-  const account = {
-    cpf: '00000014141',
-    password: '147258'
-  }
+    const code = await getLatest2FACode(account.cpf);
+    await loginPage.fill2FACodeAndVerify(code)
 
-  await loginPage.visitPage();
-  await loginPage.fillCPFAndContinue(account.cpf)
-  await loginPage.fillPasswordAndContinue(account.password)
+    await expect(await dashPage.checkAccountBalance()).toContainText('R$')
+  });
+})
 
-  //Checkpoint Strategy
-  await page.getByRole('heading', {name:'Verificação em duas etapas'}).waitFor({timeout: 3000})
+test.describe('Sad Login Flow', () => {
+  test('Should display an error when 2FA code is invalid', async ({ page }) => {
+    const loginPage = new LoginPage(page)
 
-  const code = await getLatest2FACode(account.cpf);
-  await loginPage.fill2FACodeAndVerify(code)
+    const account = {
+      cpf: '00000014141',
+      password: '147258'
 
-  await expect(await dashPage.checkAccountBalance()).toContainText('R$')
-});
+    }
+    await loginPage.visitPage();
+    await loginPage.fillCPFAndContinue(account.cpf)
+    await loginPage.fillPasswordAndContinue(account.password)
+    await loginPage.fill2FACodeAndVerify('12123123124')
+    await expect(page.locator('span')).toContainText('Código inválido. Por favor, tente novamente.');
+  });
+
+  
+})
+
