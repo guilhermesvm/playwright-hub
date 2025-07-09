@@ -1,8 +1,21 @@
 import { expect } from "@playwright/test";
 
 export class LoginPage {
+    
     constructor(page){
         this.page = page;
+    }
+
+    get fieldEmail() {
+        return this.page.getByTestId('input-email');
+    }
+
+    get fieldPassword() {
+        return this.page.getByTestId('input-senha');
+    }
+
+    get submitButton(){
+        return this.page.getByTestId('botao-acessar-conta')
     }
 
     async visitPage(){
@@ -12,17 +25,32 @@ export class LoginPage {
         await expect(pageHeader).toHaveText('Login');
     }
 
-    async submitLoginForm(email, password){
-        const fieldEmail = this.page.getByTestId('input-email');
-        const fieldPassword = this.page.getByTestId('input-senha');
-        const submitFormButton = this.page.getByTestId('botao-acessar-conta');
+    async fillEmail(email){
+        await this.fieldEmail.fill(email);
+    }
 
-        await fieldEmail.fill(email);
-        await fieldPassword.fill(password);
-        await submitFormButton.click();
+    async fillPassword(password){
+        await this.fieldPassword.fill(password);
+    }
+
+    async clickSubmitButton(){
+        await this.submitButton.click();
+    }
+
+    async fillAndSubmitLoginForm(email, password){
+        await this.fieldEmail.fill(email);
+        await this.fieldPassword.fill(password);
+        if(await this.submitButton.isEnabled()){
+            await this.clickSubmitButton();
+        }   
     }
 
     async successfulLogin(){
         await expect(this.page).toHaveURL('/home');
+    }
+
+    async invalidLoginErrorMessage() {
+        const errorMessage = this.page.getByText('Você não está autorizado a');
+        await expect(errorMessage).toBeVisible();
     }
 }
