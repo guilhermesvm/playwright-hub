@@ -1,4 +1,5 @@
 import { expect } from "@playwright/test";
+import { ENDPOINTS } from "../constants/endpoints";
 
 export class LoginPage {
     
@@ -11,8 +12,8 @@ export class LoginPage {
     }
 
     async visitPage(){
-        await this.page.goto('/auth/login');
-        await expect(this.page).toHaveURL('/auth/login');
+        await this.page.goto(ENDPOINTS.login);
+        await expect(this.page).toHaveURL(ENDPOINTS.login);
         await expect(this.pageHeader).toBeVisible();
         await expect(this.pageHeader).toHaveText('Login');
     }
@@ -38,7 +39,7 @@ export class LoginPage {
     }
 
     async successfulLogin(){
-        await expect(this.page).toHaveURL('/home');
+        await expect(this.page).toHaveURL(ENDPOINTS.home);
     }
 
     async invalidLoginErrorMessage() {

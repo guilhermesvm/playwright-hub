@@ -1,4 +1,5 @@
 import { expect } from "@playwright/test";
+import { ENDPOINTS } from "../constants/endpoints";
 
 export class RegisterPage {
     constructor(page){
@@ -6,9 +7,9 @@ export class RegisterPage {
     }
 
     async visitPage(){
-        await this.page.goto('auth/cadastro');
-        await expect(this.page).toHaveURL('auth/cadastro')
-        const pageHeading = this.page.getByText('Crie sua conta');
+        await this.page.goto(ENDPOINTS.register);
+        await expect(this.page).toHaveURL(ENDPOINTS.register)
+        const pageHeading = this.page.getByText('Crie sua conta');  
         await expect(pageHeading).toBeVisible();
     }
 
