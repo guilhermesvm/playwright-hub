@@ -1,4 +1,5 @@
 import { expect } from "@playwright/test";
+import { ENDPOINTS } from "../constants/endpoints";
 
 export class HomePage {
 
@@ -21,12 +22,13 @@ export class HomePage {
             .getByLabel('Destino');
 
         this.departureDateField = page.getByTestId('campo-data-ida');
+        this.returnDateField = page.getByText('Data da volta');
         this.searchButton = page.getByTestId('botao-buscar-passagens');
     }
 
     async visitPage(){
-        await this.page.goto('/');
-        await expect(this.page).toHaveURL('/home')
+        await this.page.goto(ENDPOINTS.root);
+        await expect(this.page).toHaveURL(ENDPOINTS.home)
         await expect(this.pageHeader).toBeVisible();
         await expect(this.pageHeader).toHaveText('Passagens');
     }
@@ -61,7 +63,7 @@ export class HomePage {
         await this.closePassengerModalBtn.click();
     }
 
-    async setOriginAndDestination(origin, destination){
+    async fillRoute(origin, destination){
         await this.dropdownFieldOrigin.fill(origin);
         await this.dropdownFieldOrigin.press('Enter');
 
@@ -70,12 +72,11 @@ export class HomePage {
     }
 
     async setDepartureDate(date){
-        const formattedDate = new Intl.DateTimeFormat('en-US').format(date)
-        await this.departureDateField.fill(formattedDate);
+        //const formattedDate = new Intl.DateTimeFormat('en-US').format(date)
+        await this.departureDateField.fill(date);
     }
 
-    async searchForTickets(){
+    async submitSearch(){
         await this.searchButton.click();
     }
-
 }
