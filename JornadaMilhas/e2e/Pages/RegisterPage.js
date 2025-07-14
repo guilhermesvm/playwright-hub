@@ -4,13 +4,13 @@ import { ENDPOINTS } from "../constants/endpoints";
 export class RegisterPage {
     constructor(page){
         this.page = page;
+        this.pageHeader = page.getByText('Crie sua conta');  
     }
 
     async visitPage(){
         await this.page.goto(ENDPOINTS.register);
-        await expect(this.page).toHaveURL(ENDPOINTS.register)
-        const pageHeading = this.page.getByText('Crie sua conta');  
-        await expect(pageHeading).toBeVisible();
+        await expect(this.page).toHaveURL(ENDPOINTS.register)  
+        await expect(this.pageHeader).toBeVisible();
     }
 
     async fillForm(){
