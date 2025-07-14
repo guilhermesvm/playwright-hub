@@ -28,6 +28,7 @@ test.describe('Search Plane Tickets', () => {
 
         origin = normalizeToTitleCase(origin);
         destination = normalizeToTitleCase(destination);
-        await searchPage.isDisplayingTrip('Somente ida', origin, destination);
+        const departureDate = '12/07'
+        await searchPage.isDisplayingTrip('Somente ida', origin, destination, departureDate);
     })
 })
