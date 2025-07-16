@@ -1,14 +1,9 @@
-import { test,  expect } from "@playwright/test";
-import { HomePage } from "./Pages/HomePage";
-import { SearchPage } from "./Pages/SearchPage";
-import { normalizeToTitleCase } from "./utils/normalizeToTitleCase";
+import { expect } from "@playwright/test";
+import { normalizeToTitleCase } from "../utils/normalizeToTitleCase";
+import { test } from "../fixtures/fixtures";
 
 test.describe('Search Plane Tickets', () => {
-    test('Should only search for one-way ticket', async ({ page }) => {
-        const homePage = new HomePage(page);
-        const searchPage = new SearchPage(page);
-
-        await homePage.visitPage();
+    test('Should only search for one-way ticket', async ({ homePage, searchPage }) => {
         await homePage.clickOneWayButton();
 
         await homePage.openPassengerModal();

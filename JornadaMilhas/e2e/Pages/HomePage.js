@@ -24,6 +24,9 @@ export class HomePage {
         this.departureDateField = page.getByTestId('campo-data-ida');
         this.returnDateField = page.getByText('Data da volta');
         this.searchButton = page.getByTestId('botao-buscar-passagens');
+        this.ticketsTitle = page.getByTestId('titulo-passagens');
+        this.saleTitle = page.getByTestId('titulo-promocoes');
+        this.statementTitle = page.getByTestId('titulo-depoimentos');
     }
 
     async visitPage(){

@@ -1,13 +1,5 @@
-import { test as base, expect } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { ENDPOINTS } from "../constants/endpoints";
-
-export const test = base.extend({
-    loginPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.visitPage();
-        await use(loginPage);
-    }
-});
 
 export class LoginPage {
     
@@ -17,6 +9,8 @@ export class LoginPage {
         this.emailField = page.getByTestId('input-email');
         this.passwordField = page.getByTestId('input-senha');
         this.submitButton = page.getByTestId('botao-acessar-conta');
+        this.authorizationErrorMessage = page.getByText('Você não está autorizado a acessar este recurso');
+        this.emailErrorMessage = page.getByText('E-mail inválido');
     }
 
     async visitPage(){

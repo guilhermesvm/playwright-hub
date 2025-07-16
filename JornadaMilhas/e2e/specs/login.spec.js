@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test }  from './Pages/LoginPage';
+import { test } from '../fixtures/fixtures';
 
 test.describe('Login Page', () => {
     test('Should log in using valid credentials', async ({ loginPage }) => {
@@ -15,8 +15,7 @@ test.describe('Login Page', () => {
         const INCORRECT_PASSWORD = 'incorrectpassword123'
 
         await loginPage.fillAndSubmitLoginForm(INCORRECT_EMAIL, INCORRECT_PASSWORD);
-        const errorMessage = loginPage.page.getByText('Você não está autorizado a acessar este recurso');
-        await expect(errorMessage).toBeVisible();     
+        await expect(loginPage.authorizationErrorMessage).toBeVisible();     
     })
 
     test('Should not log in using invalid credentials', async ({ loginPage }) => {
@@ -25,9 +24,7 @@ test.describe('Login Page', () => {
 
         await loginPage.fillEmail(INVALID_EMAIL)
         await loginPage.fillPassword(INVALID_PASSWORD)
-
-        const fieldErrorMessage = loginPage.page.getByText('E-mail inválido');
-        await expect(fieldErrorMessage).toBeVisible();
+        await expect(loginPage.emailErrorMessage).toBeVisible();
         await expect(loginPage.submitButton).toBeDisabled();
     }) 
     

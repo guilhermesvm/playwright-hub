@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { RegisterPage } from "./Pages/RegisterPage";
+import { RegisterPage } from "../Pages/RegisterPage";
 
 test.describe('Register Page', () => {
     test('Should log in with valid credentials', async ( {page} ) => {
