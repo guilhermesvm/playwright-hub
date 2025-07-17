@@ -23,6 +23,10 @@ export class RegisterPage {
 
     }
 
+    getGenderRadio(gender){
+        return this.page.getByRole('radio', { name: gender });
+    }
+
     async visitPage(){
         await this.page.goto(ENDPOINTS.register);
         await expect(this.page).toHaveURL(ENDPOINTS.register)  
@@ -46,19 +50,18 @@ export class RegisterPage {
 
         await this.nameInput.fill(name);
         await this.birthDateInput.fill(formatDateEN(birthDate));
-        await this.page.getByRole('radio', { name: gender }).click();
+        await this.getGenderRadio(gender).check();
         await this.cpfInput.fill(cpf);
         await this.cityInput.fill(city);
         await this.phoneNumberInput.fill(phone);
         await this.stateSelect.fill(state);
+        await this.stateSelect.press('Enter');
         await this.emailInput.fill(email)
         await this.confirmEmailInput.fill(confirmEmail);
         await this.passwordInput.fill(password);
         await this.confirmPasswordInput.fill(confirmPassword);
         await this.termsCheckbox.check();
     }
-
-
 
     async submitForm(){
         await this.submitButton.click();
