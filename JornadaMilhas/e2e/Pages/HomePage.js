@@ -13,7 +13,6 @@ export class HomePage {
         this.incrementInfantBtn = page.getByTestId('seletor-passageiro-bebes').getByRole('button', { name: 'Ícone do operador de adição' })
         this.closePassengerModalBtn = page.getByTestId('fechar-modal-passageiros');
         this.dropdownFieldOrigin = page
-        
             .getByTestId('campo-dropdown-origem')
             .getByLabel('Origem');
             
