@@ -20,6 +20,7 @@ export class RegisterPage {
         this.termsCheckbox = page.getByRole('checkbox', { name: 'Li e aceito os termos e condições deste cadastro' })
         
         this.submitButton = page.getByRole('button', { name: 'CADASTRAR' });
+        this.duplicatedEmailErrorMessage = page.getByText('Ocorreu um erro desconhecido')
 
     }
 
@@ -65,5 +66,15 @@ export class RegisterPage {
 
     async submitForm(){
         await this.submitButton.click();
+    }
+
+    async registerUser(user){
+        await this.fillForm(user);
+        await this.submitForm();
+    }
+
+    async expectDuplicatedEmailErrorMessage(){
+        await expect(this.duplicatedEmailErrorMessage).toBeVisible();
+        await expect(this.duplicatedEmailErrorMessage).toHaveText('Ocorreu um erro desconhecido');
     }
 }
