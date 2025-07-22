@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "e2e": "playwright test --ui",
-    "cgn": "playwright codegen"
+    "cgn": "playwright codegen",
+    "web": "cd web-jornada-milhas/ && npm start",
+    "api": "cd api-jornada-milhas/ && npm start"
   },
   "keywords": [],
   "author": "",
