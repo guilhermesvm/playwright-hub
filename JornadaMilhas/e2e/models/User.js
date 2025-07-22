@@ -1,4 +1,4 @@
-export const gender = Object.freeze({
+export const Gender = Object.freeze({
     MALE: 'Masculino',
     FEMALE: 'Feminino',
     OTHER: 'Prefiro não informar'
