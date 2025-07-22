@@ -14,6 +14,7 @@ test.describe('Register Page', () => {
     test('Should complete registration with valid data', async ({ registerPage }) => {
         await expect(registerPage.submitButton).toBeDisabled();
         await registerPage.fillForm(randomUser);
+        await registerPage.checkTermBox();
         await expect(registerPage.termsCheckbox).toBeChecked();
         await expect(registerPage.submitButton).toBeEnabled();
         await registerPage.submitForm();
