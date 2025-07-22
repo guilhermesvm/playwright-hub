@@ -1,4 +1,4 @@
-import { gender } from "../models/User";
+import { Gender } from "../models/User";
 import { formatDateEN } from "../utils/formatDate";
 
 export default class BaseRegisterProfileForm{
@@ -11,9 +11,9 @@ export default class BaseRegisterProfileForm{
         this.radioOtherGender = page.getByRole('radio', { name: 'Prefiro não informar' });
 
         this.radioGender = {
-            [gender.MALE]: this.radioMaleGender,
-            [gender.FEMALE]: this.radioFemaleGender,
-            [gender.OTHER]: this.radioOtherGender
+            [Gender.MALE]: this.radioMaleGender,
+            [Gender.FEMALE]: this.radioFemaleGender,
+            [Gender.OTHER]: this.radioOtherGender
         }
         this.cpfInput = page.getByRole('textbox', { name: 'CPF' })
         this.cityInput = page.getByRole('textbox', { name: 'Cidade' })
@@ -43,8 +43,8 @@ export default class BaseRegisterProfileForm{
 
         await this.nameInput.fill(name);
         await this.birthDateInput.fill(formatDateEN(birthDate));
-        const genderToBe = this.radioGender[gender];
-        await genderToBe.check();
+        const genderRadioLocator = this.radioGender[gender];
+        await genderRadioLocator.check();
         await this.cpfInput.fill(cpf);
         await this.cityInput.fill(city);
         await this.phoneNumberInput.fill(phone);
