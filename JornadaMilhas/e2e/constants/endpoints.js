@@ -4,4 +4,5 @@ export const ENDPOINTS = {
     login: '/auth/login',
     home:'/home',
     register: 'auth/cadastro',
+    profile: 'auth/perfil'
 }

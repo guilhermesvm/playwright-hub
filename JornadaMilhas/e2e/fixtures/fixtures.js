@@ -3,6 +3,7 @@ import { LoginPage } from "../Pages/LoginPage";
 import { HomePage } from "../Pages/HomePage";
 import { SearchPage } from "../Pages/SearchPage";
 import { RegisterPage } from "../Pages/RegisterPage";
+import { ProfilePage } from "../Pages/ProfilePage";
 
 export const test = base.extend({
     homePage: async ({ page }, use) => {
@@ -24,5 +25,11 @@ export const test = base.extend({
         const registerPage = new RegisterPage(page);
         await registerPage.visitPage();
         await use(registerPage);
+    },
+    profilePage: async({ page }, use) => {
+        const profilePage = new ProfilePage(page);
+        await profilePage.visitPage();
+        await use(profilePage);
     }
+
 });
