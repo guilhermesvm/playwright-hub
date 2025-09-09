@@ -1,6 +1,5 @@
 import { expect } from "@playwright/test";
 import { ENDPOINTS } from "../constants/endpoints";
-import { formatDateEN } from "../utils/formatDate";
 import BaseRegisterProfileForm from "./BaseRegisterProfileForm";
 
 export class RegisterPage extends BaseRegisterProfileForm {
@@ -10,6 +9,7 @@ export class RegisterPage extends BaseRegisterProfileForm {
         this.page = page;
         this.pageHeader = page.getByText('Crie sua conta'); 
         this.termsCheckbox = page.getByRole('checkbox', { name: 'Li e aceito os termos e condições deste cadastro' })
+        this.submitButton = page.getByRole('button', { name: 'CADASTRAR' });
         this.duplicatedEmailErrorMessage = page.getByText('Ocorreu um erro desconhecido');
     }
 
@@ -21,6 +21,10 @@ export class RegisterPage extends BaseRegisterProfileForm {
 
     async checkTermBox(){
         await this.termsCheckbox.check();
+    }
+
+    async submitForm(){
+        await this.submitButton.click();
     }
 
     async registerUser(user){
