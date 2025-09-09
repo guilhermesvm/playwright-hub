@@ -23,7 +23,6 @@ export default class BaseRegisterProfileForm{
         this.passwordInput = page.getByRole('textbox', { name: 'Senha', exact: true })
         this.confirmEmailInput = page.getByRole('textbox', { name: 'Confirmar E-mail' })
         this.confirmPasswordInput = page.getByRole('textbox', { name: 'Confirmar Senha' })
-        this.submitButton = page.getByRole('button', { name: 'CADASTRAR' });
     }
 
     async fillForm(user){
@@ -56,7 +55,7 @@ export default class BaseRegisterProfileForm{
         await this.confirmPasswordInput.fill(confirmPassword); 
     }
 
-    async submitForm(){
-        await this.submitButton.click();
+    async getEmailInputValue(){
+        return this.emailInput.inputValue();
     }
 }
