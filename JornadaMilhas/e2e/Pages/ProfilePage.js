@@ -7,7 +7,7 @@ export class ProfilePage extends BaseRegisterProfileForm {
     constructor(page){
         super(page);
         this.page = page;
-        this.pageBanner = page.getByRole('img', { name: 'Banner da tela de perfil' });
+        this.profilePageBanner = page.getByRole('img', { name: 'Banner da tela de perfil' });
         this.pageHeader = page.getByRole('heading', { name: 'Dados pessoais' });
         this.signOutButton = page.getByRole('button', { name: 'DESLOGAR' });
         this.submitUpdateButton = page.getByRole('button', { name: 'ATUALIZAR' })
@@ -64,5 +64,16 @@ export class ProfilePage extends BaseRegisterProfileForm {
                 await expect(locator).toHaveValue(normalizedBody[key]);
             }
         }
+    }
+
+    async signOut(){
+        await expect(this.signOutButton).toBeVisible();
+        await expect(this.signOutButton).toContainText('deslogar', {ignoreCase: true} )
+        await this.signOutButton.click();
+    }
+
+    async successfullySignedOut(){
+        await expect(this.page).toHaveURL(ENDPOINTS.login);
+        await expect(this.profilePageBanner).not.toBeAttached();
     }
 }
